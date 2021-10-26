@@ -11,14 +11,16 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 
 open class PacketKotliniarzDecoder(player: Player) : MessageToMessageDecoder<Packet<PacketListener>>() {
 
-    var user: Player = player
+
+    // mozna dac private ale po co D:
+    /*private*/ val user: Player = player
 
     override fun decode(ctx: ChannelHandlerContext?, msg: Packet<PacketListener>, out: MutableList<Any>?) {
         if (ctx != null) {
             if (!ctx.channel().isOpen || ctx.pipeline() == null) return
 
             val packetName = msg.javaClass.simpleName;
-            if (packetName.equals("PacketPlayInBlockPlace")) {
+            if (packetName.equals("PacketPlayInBlockPlace")) { // albo if (msg is PacketPlayInBlockPlace) chyba nwm
                 user.sendMessage("&3kopiesz kobla".fixColors())
             } else {
                 println("Jakis debil (${user.name}) wyslal pakiet $packetName")
